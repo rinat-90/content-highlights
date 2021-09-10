@@ -4,7 +4,7 @@
       <h2 class="heading">{{ category.label }}</h2>
       <div class="banner">
         <div class="banner-list">
-          <div class="banner-list-item__wrapper">
+          <div class="banner-list-item__wrapper" ref="bannerRef">
             <a
                 v-for="item in items"
                 :key="item.id"
@@ -35,6 +35,11 @@ export default {
     category: Object,
     items: Array,
   },
+  data(){
+    return {
+      height: 0
+    }
+  },
   computed: {
     isOdd(){
       return this.items.length % 2 !== 0
@@ -50,6 +55,7 @@ export default {
                 : `${this.availableSpace / 1.2 }px`,
         '--align-self-item': this.isOdd ? 'center' : 'end',
         '--heading-icon': `url(${this.category.icon})`,
+        '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
       };
     },
   },
@@ -59,6 +65,19 @@ export default {
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       return `${months[date.getMonth()]} ${date.getDate()}`
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      const elems = this.$refs.bannerRef.children
+      for (let el in elems) {
+        if (elems[el].lastChild){
+          if (elems[el].lastChild.clientHeight > this.height) {
+            this.height = elems[el].lastChild.clientHeight
+          }
+        }
+
+      }
+    })
   }
 };
 </script>
@@ -117,6 +136,7 @@ export default {
   position: relative;
   z-index: 2;
   text-decoration: none;
+
 }
 
 .banner-list-item:last-child {
@@ -132,6 +152,7 @@ export default {
 .banner-list-item p {
   color: #494949;
   white-space: break-spaces;
+  height: var(--item-height);
 }
 
 .banner-list-item__date{
