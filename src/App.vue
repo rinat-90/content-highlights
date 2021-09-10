@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app">
     <aside>
       <div class="sidebar">
         <form @submit.prevent="onSubmit">
@@ -24,64 +24,35 @@
         <div class="row">
           <div class="large" ref="largeRef">
             <ContentHighlights
-                :available-space="availableSpace"
+                :available-space="availableSpaceLarge"
                 :items="items"
                 :backgroundImage="backgroundImage"
-                :num-of-items="numOfItems"
                 :category="category"
                 :itemBackgroundColor="itemBackgroundColor"
             />
           </div>
         </div>
         <div class="row">
-          <div class="medium" ref="mediumRef">
+          <div class="medium" ref="mediumRef"
+               v-for="i in 2"
+               :key="i">
             <ContentHighlights
-                :available-space="availableSpaceSmall"
+                :available-space="availableSpaceMedium"
                 :items="items"
                 :backgroundImage="backgroundImage"
-                :num-of-items="numOfItems"
                 :category="category"
                 :itemBackgroundColor="itemBackgroundColor"
-            />
-          </div>
-          <div class="medium" ref="mediumRef">
-            <ContentHighlights
-                :available-space="availableSpaceSmall"
-                :items="items"
-                :backgroundImage="backgroundImage"
-                :num-of-items="numOfItems"
-                :itemBackgroundColor="itemBackgroundColor"
-                :category="category"
             />
           </div>
         </div>
         <div class="row">
-          <div class="small" ref="xSmallRef">
+          <div class="small" ref="smallRef"
+               v-for="i in 3"
+               :key="i">
             <ContentHighlights
-                :available-space="availableSpaceXSmall"
+                :available-space="availableSpaceSmall"
                 :items="items"
                 :backgroundImage="backgroundImage"
-                :num-of-items="numOfItems"
-                :itemBackgroundColor="itemBackgroundColor"
-                :category="category"
-            />
-          </div>
-          <div class="small" ref="xSmallRef">
-            <ContentHighlights
-                :available-space="availableSpaceXSmall"
-                :items="items"
-                :backgroundImage="backgroundImage"
-                :num-of-items="numOfItems"
-                :itemBackgroundColor="itemBackgroundColor"
-                :category="category"
-            />
-          </div>
-          <div class="small" ref="xSmallRef">
-            <ContentHighlights
-                :available-space="availableSpaceXSmall"
-                :items="items"
-                :backgroundImage="backgroundImage"
-                :num-of-items="numOfItems"
                 :itemBackgroundColor="itemBackgroundColor"
                 :category="category"
             />
@@ -100,53 +71,54 @@ import ContentHighlights from "@/components/ContentHighlights.vue";
 import feedIcon from "@/assets/feed-icon.svg";
 export default {
   name: "App",
-  components: {
-    ContentHighlights,
-  },
+  components: { ContentHighlights },
   data() {
     return {
       form: {
         title: 'test 3',
-        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        date: new Date().toISOString().slice(0, 10),
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut deleniti deserunt eius eum explicabo fugiat maiores quaerat recusandae ullam voluptatum.'
       },
-      availableSpace: 0,
+      availableSpaceLarge: 0,
+      availableSpaceMedium: 0,
       availableSpaceSmall: 0,
-      availableSpaceXSmall: 0,
       items: [
         {
-          id: '3232323',
-          title: "Test article 1",
-          link: "https://google.com",
-          date: "AUG 20",
-          text:
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.",
+          id: 3232323,
+          title: `Test article 1`,
+          link: 'https://google.com',
+          date: '08/20/2021',
+          text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.',
         },
       ],
       backgroundImage: 'https://thumbs.dreamstime.com/b/shopping-supermarket-shopping-cart-view-motion-blur-68328476.jpg',
       itemBackgroundColor: '#fff',
       category: {
-        label: "Featured blogs",
-        link: "https://{{SOME_DOMAIN}}/featured-blogs",
+        label: 'Featured blogs',
+        link: 'https://{{SOME_DOMAIN}}/featured-blogs',
         icon: feedIcon,
       },
 
     }
   },
   mounted() {
-    this.availableSpace = this.$refs.largeRef.clientWidth
-    this.availableSpaceSmall = this.$refs.mediumRef.clientWidth
-    this.availableSpaceXSmall = this.$refs.xSmallRef.clientWidth
+    this.availableSpaceLarge = this.$refs.largeRef.clientWidth
+    this.availableSpaceMedium = this.$refs.mediumRef.clientWidth
+    this.availableSpaceSmall = this.$refs.smallRef.clientWidth
   },
   methods: {
     onSubmit() {
       if (!this.form.title && !this.form.date && !this.form.text) {
         return false
       }
+      if (this.items.length === 4) {
+        return  false
+      }
 
-      this.items.push({ id: Math.random(10), ...this.form })
-
-      console.log(this.form)
+      this.items.push({
+        id: Math.floor(Math.random() * 10),
+        ...this.form
+      })
     },
     removeItem(id) {
       this.items = this.items.filter(i => i.id !== id)
@@ -168,7 +140,7 @@ body {
   box-sizing: border-box;
 }
 
-.app-wrapper{
+.app{
   display: flex;
   padding: 2rem;
 }

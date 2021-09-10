@@ -1,26 +1,22 @@
 <template>
-  <section class="wrapper" :style="cssVars" ref="wrapperRef">
-    <div>
-      <h2 class="section-heading">
-        {{ category.label }}
-      </h2>
+  <section :style="cssVars">
+    <div class="wrapper">
+      <h2 class="heading">{{ category.label }}</h2>
       <div class="banner">
-        <div class="banner-items-wrapper">
-          <div class="banner-item-wrapper">
-            <article
-                ref="itemRef"
-                @click="onItemClicked(item)"
-                v-for="item in items.slice(0, numOfItems)"
-                :key="item.title"
-                class="banner-item"
+        <div class="banner-list">
+          <div class="banner-list-item__wrapper">
+            <a
+                v-for="item in items"
+                :key="item.id"
+                :href="item.link"
+                class="banner-list-item"
             >
-              <span class="banner-item-date">
-                <span>AUG</span>
-                <span>20</span>
+              <span class="banner-list-item__date">
+                <span>{{ parseDate(item.date)}}</span>
               </span>
               <h3>{{ item.title }}</h3>
               <p>{{ item.text }}</p>
-            </article>
+            </a>
           </div>
         </div>
       </div>
@@ -31,7 +27,7 @@
 <script>
 
 export default {
-  name: "ContentHighlights",
+  name: 'ContentHighlights',
   props: {
     availableSpace: Number,
     itemBackgroundColor: String,
@@ -41,7 +37,7 @@ export default {
   },
   computed: {
     isOdd(){
-      return this.items.length > 3 ? this.items.slice(4) % 2 !== 0 : this.items.length % 2 !== 0
+      return this.items.length % 2 !== 0
     },
     cssVars() {
       return {
@@ -58,8 +54,10 @@ export default {
     },
   },
   methods: {
-    onItemClicked(item) {
-      console.log(item)
+    parseDate(str) {
+      const date = new Date(str)
+      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      return `${months[date.getMonth()]} ${date.getDate()}`
     }
   }
 };
@@ -94,14 +92,14 @@ export default {
   background-color: rgba(0,0,0, 0.2);
 }
 
-.banner-items-wrapper {
+.banner-list {
   display: flex;
   justify-content: var(--align-self-item);
   height: 100%;
   min-height: 500px;
   gap: 20px;
 }
-.banner-item-wrapper {
+.banner-list-item__wrapper {
   display: flex;
   flex-basis: var(--item-width);
   align-self: center;
@@ -109,50 +107,62 @@ export default {
   padding: 1.5rem;
 }
 
-.banner-item h3 {
-  text-transform: uppercase;
-  font-size: 20px;
-  color: #494949;
-}
 
-.banner-item p {
-  color: #494949;
-  white-space: break-spaces;
-}
 
-.banner-item {
+.banner-list-item {
   background-color: var(--item-bg-color);
   padding: 15px;
   margin-bottom: 50px;
   box-shadow: 0px 1px 5px #ddd;
   position: relative;
   z-index: 2;
-
+  text-decoration: none;
 }
 
-.banner-item-date{
+.banner-list-item:last-child {
+  margin-bottom: 0;
+}
+
+.banner-list-item h3 {
+  text-transform: uppercase;
+  font-size: 20px;
+  color: #494949;
+}
+
+.banner-list-item p {
+  color: #494949;
+  white-space: break-spaces;
+}
+
+.banner-list-item__date{
   position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   content: '';
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   font-size: 12px;
   border-radius: 50%;
   background-color: #000;
   text-align: center;
+  padding: 10px;
   color: #fff;
-  left: -25px;
-  top: -25px;
+  left: -35px;
+  top: -35px;
 }
 
-.banner-item:last-child {
-  margin-bottom: 0;
+.banner-list-item__date > span{
+  font-size: 16px;
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: break-spaces;
 }
 
-.section-heading{
-  background-color: #ccc;
+
+
+.heading{
+  background-color: #e9eae9;
   text-transform: uppercase;
   padding: 10px 10px 10px 100px;
   margin-bottom: 10px;
@@ -160,7 +170,7 @@ export default {
   font-size: 20px;
 }
 
-.section-heading:before{
+.heading:before{
   content: '';
   margin-left: 15px;
   background: var(--heading-icon);
@@ -176,10 +186,8 @@ export default {
   background-color: #000;
 }
 
-.icon{
-  width: 50px;
-  height: 50px;
-}
+
+
 
 </style>
 
