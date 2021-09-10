@@ -84,21 +84,21 @@ export default {
       availableSpaceSmall: 0,
       items: [
         {
-          id: 3232323,
+          id: 321111323,
           title: `Test article 1`,
           link: 'https://google.com',
           date: '08/20/2021',
           text: 'Lorem ipsum, dolor sit amet consectetur consectetur consectetur adipisicing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.',
         },
         {
-          id: 3232323,
+          id: 3235454323,
           title: `Test article 1`,
           link: 'https://google.com',
           date: '08/20/2021',
           text: 'Lorem ipsum, dolor icing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.',
         },
         {
-          id: 3232323,
+          id: 32666323,
           title: `Test article 1`,
           link: 'https://google.com',
           date: '08/20/2021',
