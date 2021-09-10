@@ -7,7 +7,8 @@
             :items="items"
             :backgroundImage="backgroundImage"
             :num-of-items="numOfItems"
-          :category="category"
+            :category="category"
+            :itemBackgroundColor="itemBackgroundColor"
         />
       </div>
     </div>
