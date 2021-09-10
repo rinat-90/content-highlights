@@ -1,73 +1,98 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="large" ref="largeRef">
-        <ContentHighlights
-            :available-space="availableSpace"
-            :items="items"
-            :backgroundImage="backgroundImage"
-            :num-of-items="numOfItems"
-            :category="category"
-            :itemBackgroundColor="itemBackgroundColor"
-        />
+  <div class="app-wrapper">
+    <aside>
+      <div class="sidebar">
+        <form @submit.prevent="onSubmit">
+          <input v-model.trim="form.title" placeholder="Title" type="text">
+          <input v-model="form.date" placeholder="Date" type="date">
+          <textarea v-model.trim="form.text" placeholder="Text" type="text"></textarea>
+          <button type="submit">Add</button>
+        </form>
+
+        <ul class="items-list">
+          <li v-for="item in items" :key="item.id">
+            <div class="list-item">
+              <span>{{ item.title }}</span>
+              <span @click="removeItem(item.id)">X</span>
+            </div>
+          </li>
+        </ul>
       </div>
-    </div>
-    <div class="row">
-      <div class="medium" ref="mediumRef">
-        <ContentHighlights
-            :available-space="availableSpaceSmall"
-            :items="items"
-            :backgroundImage="backgroundImage"
-            :num-of-items="numOfItems"
-            :category="category"
-            :itemBackgroundColor="itemBackgroundColor"
-        />
-      </div>
-      <div class="medium" ref="mediumRef">
-        <ContentHighlights
-            :available-space="availableSpaceSmall"
-            :items="items"
-            :backgroundImage="backgroundImage"
-            :num-of-items="numOfItems"
-            :itemBackgroundColor="itemBackgroundColor"
-            :category="category"
-        />
-      </div>
-    </div>
-    <div class="row">
-        <div class="small" ref="xSmallRef">
-          <ContentHighlights
-              :available-space="availableSpaceXSmall"
-              :items="items"
-              :backgroundImage="backgroundImage"
-              :num-of-items="numOfItems"
-              :itemBackgroundColor="itemBackgroundColor"
-              :category="category"
-          />
+    </aside>
+    <main>
+      <div class="container">
+        <div class="row">
+          <div class="large" ref="largeRef">
+            <ContentHighlights
+                :available-space="availableSpace"
+                :items="items"
+                :backgroundImage="backgroundImage"
+                :num-of-items="numOfItems"
+                :category="category"
+                :itemBackgroundColor="itemBackgroundColor"
+            />
+          </div>
         </div>
-      <div class="small" ref="xSmallRef">
-        <ContentHighlights
-            :available-space="availableSpaceXSmall"
-            :items="items"
-            :backgroundImage="backgroundImage"
-            :num-of-items="numOfItems"
-            :itemBackgroundColor="itemBackgroundColor"
-            :category="category"
-        />
+        <div class="row">
+          <div class="medium" ref="mediumRef">
+            <ContentHighlights
+                :available-space="availableSpaceSmall"
+                :items="items"
+                :backgroundImage="backgroundImage"
+                :num-of-items="numOfItems"
+                :category="category"
+                :itemBackgroundColor="itemBackgroundColor"
+            />
+          </div>
+          <div class="medium" ref="mediumRef">
+            <ContentHighlights
+                :available-space="availableSpaceSmall"
+                :items="items"
+                :backgroundImage="backgroundImage"
+                :num-of-items="numOfItems"
+                :itemBackgroundColor="itemBackgroundColor"
+                :category="category"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="small" ref="xSmallRef">
+            <ContentHighlights
+                :available-space="availableSpaceXSmall"
+                :items="items"
+                :backgroundImage="backgroundImage"
+                :num-of-items="numOfItems"
+                :itemBackgroundColor="itemBackgroundColor"
+                :category="category"
+            />
+          </div>
+          <div class="small" ref="xSmallRef">
+            <ContentHighlights
+                :available-space="availableSpaceXSmall"
+                :items="items"
+                :backgroundImage="backgroundImage"
+                :num-of-items="numOfItems"
+                :itemBackgroundColor="itemBackgroundColor"
+                :category="category"
+            />
+          </div>
+          <div class="small" ref="xSmallRef">
+            <ContentHighlights
+                :available-space="availableSpaceXSmall"
+                :items="items"
+                :backgroundImage="backgroundImage"
+                :num-of-items="numOfItems"
+                :itemBackgroundColor="itemBackgroundColor"
+                :category="category"
+            />
+          </div>
+        </div>
+
       </div>
-      <div class="small" ref="xSmallRef">
-        <ContentHighlights
-            :available-space="availableSpaceXSmall"
-            :items="items"
-            :backgroundImage="backgroundImage"
-            :num-of-items="numOfItems"
-            :itemBackgroundColor="itemBackgroundColor"
-            :category="category"
-        />
-      </div>
-    </div>
+    </main>
 
   </div>
+
 </template>
 
 <script>
@@ -80,38 +105,22 @@ export default {
   },
   data() {
     return {
-      numOfItems: 4,
+      form: {
+        title: 'test 3',
+        date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+        text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut deleniti deserunt eius eum explicabo fugiat maiores quaerat recusandae ullam voluptatum.'
+      },
       availableSpace: 0,
       availableSpaceSmall: 0,
       availableSpaceXSmall: 0,
       items: [
         {
+          id: '3232323',
           title: "Test article 1",
           link: "https://google.com",
           date: "AUG 20",
           text:
               "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.",
-        },
-        {
-          title: "Test article 2",
-          link: "https://google.com",
-          date: "AUG 31",
-          text:
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.",
-        },
-        {
-          title: "Test article 3",
-          link: "https://google.com",
-          date: "SEPT 2",
-          text:
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos quam sint rem doloremque adipisicing dignissimos eum aliquid. Totam,  adipisicing tenetur minima.",
-        },
-        {
-          title: "Test article 4",
-          link: "https://google.com",
-          date: "AUG 29",
-          text:
-              "Lorem ipsum, dolor sit amet consectetur adipisicing  elit. Eos quam sint rem adipisicing doloremque dignissimos eum aliquid. Totam, tenetur adipisicing minima.",
         },
       ],
       backgroundImage: 'https://thumbs.dreamstime.com/b/shopping-supermarket-shopping-cart-view-motion-blur-68328476.jpg',
@@ -129,6 +138,20 @@ export default {
     this.availableSpaceSmall = this.$refs.mediumRef.clientWidth
     this.availableSpaceXSmall = this.$refs.xSmallRef.clientWidth
   },
+  methods: {
+    onSubmit() {
+      if (!this.form.title && !this.form.date && !this.form.text) {
+        return false
+      }
+
+      this.items.push({ id: Math.random(10), ...this.form })
+
+      console.log(this.form)
+    },
+    removeItem(id) {
+      this.items = this.items.filter(i => i.id !== id)
+    }
+  }
 };
 </script>
 
@@ -143,6 +166,24 @@ body {
   font: 16px 'Open Sans', sans-serif;
   line-height: 1.6;
   box-sizing: border-box;
+}
+
+.app-wrapper{
+  display: flex;
+  padding: 2rem;
+}
+
+aside {
+  flex-basis: 33%;
+  position: relative;
+}
+.sidebar {
+  position: fixed;
+  width: 30%;
+  background-color: #ccc;
+}
+main {
+  flex-basis: 67%;
 }
 .container {
   max-width: 1200px;
@@ -169,5 +210,31 @@ body {
 .small{
   flex-basis: 32%;
   margin-bottom: 20px;
+}
+
+form {
+  padding: 15px;
+}
+
+input, textarea {
+ display: block;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+textarea {
+  height: 80px;
+}
+
+.items-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+.list-item{
+  display: flex;
+  justify-content: space-between;
 }
 </style>

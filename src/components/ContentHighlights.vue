@@ -33,7 +33,6 @@
 export default {
   name: "ContentHighlights",
   props: {
-    numOfItems: Number,
     availableSpace: Number,
     itemBackgroundColor: String,
     backgroundImage: String,
@@ -42,7 +41,7 @@ export default {
   },
   computed: {
     isOdd(){
-      return this.numOfItems % 2 !== 0
+      return this.items.length > 3 ? this.items.slice(4) % 2 !== 0 : this.items.length % 2 !== 0
     },
     cssVars() {
       return {
