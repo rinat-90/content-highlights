@@ -15,7 +15,7 @@
                 <span>{{ parseDate(item.date)}}</span>
               </span>
               <h3>{{ item.title }}</h3>
-              <p>{{ item.text }}</p>
+              <p :style="maxHeight">{{ item.text }}</p>
             </a>
           </div>
         </div>
@@ -44,6 +44,9 @@ export default {
     isOdd(){
       return this.items.length % 2 !== 0
     },
+    maxHeight(){
+      return this.height > 0 ? { 'height': this.height + 'px'} : {'height': 'auto' }
+    },
     cssVars() {
       return {
         "--bg-img": `url(${this.backgroundImage})`,
@@ -55,7 +58,7 @@ export default {
                 : `${this.availableSpace / 1.2 }px`,
         '--align-self-item': this.isOdd ? 'center' : 'end',
         '--heading-icon': `url(${this.category.icon})`,
-        '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
+        // '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
       };
     },
   },
@@ -73,7 +76,6 @@ export default {
             this.height = elems[el].lastChild.clientHeight
           }
         }
-
       }
     }
   },
@@ -153,7 +155,7 @@ export default {
 .banner-list-item p {
   color: #494949;
   white-space: break-spaces;
-  height: var(--item-height);
+  /*height: var(--item-height);*/
 }
 
 .banner-list-item__date{
