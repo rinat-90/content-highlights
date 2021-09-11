@@ -55,7 +55,7 @@ export default {
                 : `${this.availableSpace / 1.2 }px`,
         '--align-self-item': this.isOdd ? 'center' : 'end',
         '--heading-icon': `url(${this.category.icon})`,
-        '--item-height': this.height > 0 ? this.height + 'px' : '100px'
+        '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
       };
     },
   },
@@ -64,10 +64,8 @@ export default {
       const date = new Date(str)
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       return `${months[date.getMonth()]} ${date.getDate()}`
-    }
-  },
-  mounted() {
-    this.$nextTick(() => {
+    },
+    getMaxHeight (){
       const elems = this.$refs.bannerRef.children
       for (let el in elems) {
         if (elems[el].children){
@@ -77,7 +75,10 @@ export default {
         }
 
       }
-    })
+    }
+  },
+  mounted() {
+    this.$nextTick(this.getMaxHeight)
   }
 };
 </script>
