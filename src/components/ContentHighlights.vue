@@ -55,7 +55,7 @@ export default {
                 : `${this.availableSpace / 1.2 }px`,
         '--align-self-item': this.isOdd ? 'center' : 'end',
         '--heading-icon': `url(${this.category.icon})`,
-        '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
+        '--item-height': this.height > 0 ? this.height + 'px' : '100px'
       };
     },
   },
@@ -70,7 +70,7 @@ export default {
     this.$nextTick(() => {
       const elems = this.$refs.bannerRef.children
       for (let el in elems) {
-        if (elems[el].lastChild){
+        if (elems[el].children){
           if (elems[el].lastChild.clientHeight > this.height) {
             this.height = elems[el].lastChild.clientHeight
           }
@@ -130,7 +130,7 @@ export default {
 
 .banner-list-item {
   background-color: var(--item-bg-color);
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 50px;
   box-shadow: 0px 1px 5px #ddd;
   position: relative;
@@ -161,20 +161,20 @@ export default {
   flex-direction: column;
   justify-content: center;
   content: '';
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   font-size: 12px;
   border-radius: 50%;
   background-color: #000;
   text-align: center;
   padding: 10px;
   color: #fff;
-  left: -35px;
-  top: -35px;
+  left: -30px;
+  top: -25px;
 }
 
 .banner-list-item__date > span{
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1.2;
   text-transform: uppercase;
   white-space: break-spaces;
