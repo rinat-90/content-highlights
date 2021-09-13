@@ -51,23 +51,23 @@ export default {
     },
     cssVars() {
       return {
-        "--bg-img": `url(${this.backgroundImage})`,
-        "--item-bg-color": `${this.itemBackgroundColor}`,
-        "--item-width": this.availableSpace > 760
+        '--align-self-item': this.isOdd ? 'center' : 'end',
+        '--heading-icon': `url(${this.category.icon})`,
+        '--bg-img': `url(${this.backgroundImage})`,
+        '--item-bg-color': `${this.itemBackgroundColor}`,
+        '--item-height': this.height > 0 ? this.height + 'px' : 'auto',
+        '--item-width': this.availableSpace > 760
             ? `${this.availableSpace / 2.5 }px`
             : this.availableSpace > 550
                 ? `${this.availableSpace / 1.5 }px`
                 : `${this.availableSpace / 1.2 }px`,
-        '--align-self-item': this.isOdd ? 'center' : 'end',
-        '--heading-icon': `url(${this.category.icon})`,
-        '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
       };
     },
   },
   methods: {
     parseDate(str) {
       const date = new Date(str)
-      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       return `${months[date.getMonth()]} ${date.getDate()}`
     },
     debounce(fn, interval) {
@@ -86,10 +86,7 @@ export default {
           if (elems[el].lastChild.clientHeight > this.height) {
             this.height = elems[el].lastChild.clientHeight
           }
-          if (elems[el].lastChild.clientHeight > elems[el].lastChild.firstChild.offsetHeight) {
-            this.height = elems[el].lastChild.firstChild.offsetHeight
-          }
-          if (elems[el].lastChild.clientHeight < elems[el].lastChild.firstChild.offsetHeight) {
+          if (elems[el].lastChild.clientHeight > elems[el].lastChild.firstChild.offsetHeight || elems[el].lastChild.clientHeight < elems[el].lastChild.firstChild.offsetHeight) {
             this.height = elems[el].lastChild.firstChild.offsetHeight
           }
         }
@@ -105,6 +102,13 @@ export default {
   },
   unmounted() {
     window.removeEventListener('resize', this.getMaxHeight)
+  },
+  watch: {
+    items(val){
+      if (val) {
+        this.getMaxHeight()
+      }
+    }
   }
 };
 </script>
