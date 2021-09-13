@@ -88,21 +88,21 @@ export default {
           title: `Test article 1`,
           link: 'https://google.com',
           date: '08/20/2021',
-          text: 'Lorem ipsum, dolor sit amet consectetur consectetur consectetur adipisicing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.',
+          text: ' tenetur minima.',
         },
         {
           id: 3235454323,
           title: `Test article 1`,
           link: 'https://google.com',
           date: '08/20/2021',
-          text: 'Lorem ipsum, dolor icing elit. Eos quam sint rem doloremque dignissimos eum aliquid. Totam, tenetur minima.',
+          text: 'Lorem ipsum,rem doloremque dignissimos eum aliquid. Totam, tenetur minima.',
         },
         {
           id: 32666323,
           title: `Test article 1`,
           link: 'https://google.com',
           date: '08/20/2021',
-          text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos quam si dignissimos  consectetureum aliquid. Tot consecteturam, tenetur minima.',
+          text: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos quam  lor sit amet consectetur adipisicing elit. Eos quam si dignissimos  consectetureum aliquid. Tot consecteturam, tenetur minima.',
         },
       ],
       backgroundImage: 'https://thumbs.dreamstime.com/b/shopping-supermarket-shopping-cart-view-motion-blur-68328476.jpg',
@@ -137,7 +137,7 @@ export default {
     removeItem(id) {
       this.items = this.items.filter(i => i.id !== id)
     }
-  }
+  },
 };
 </script>
 

@@ -15,7 +15,9 @@
                 <span>{{ parseDate(item.date)}}</span>
               </span>
               <h3>{{ item.title }}</h3>
-              <p :style="maxHeight">{{ item.text }}</p>
+              <p>
+                <span>{{ item.text }}</span>
+              </p>
             </a>
           </div>
         </div>
@@ -58,7 +60,7 @@ export default {
                 : `${this.availableSpace / 1.2 }px`,
         '--align-self-item': this.isOdd ? 'center' : 'end',
         '--heading-icon': `url(${this.category.icon})`,
-        // '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
+        '--item-height': this.height > 0 ? this.height + 'px' : 'auto'
       };
     },
   },
@@ -70,17 +72,32 @@ export default {
     },
     getMaxHeight (){
       const elems = this.$refs.bannerRef.children
-      for (let el in elems) {
-        if (elems[el].children){
-          if (elems[el].lastChild.clientHeight > this.height) {
-            this.height = elems[el].lastChild.clientHeight
+      if (elems.length) {
+        for (let el in elems) {
+          if (elems[el].children){
+            if (elems[el].lastChild.clientHeight > this.height) {
+              this.height = elems[el].lastChild.clientHeight
+            }
+            if (elems[el].lastChild.clientHeight > elems[el].lastChild.firstChild.offsetHeight) {
+              this.height = elems[el].lastChild.firstChild.offsetHeight
+            }
+            if (elems[el].lastChild.clientHeight < elems[el].lastChild.firstChild.offsetHeight) {
+              this.height = elems[el].lastChild.firstChild.offsetHeight
+            }
           }
         }
       }
+
     }
   },
   mounted() {
     this.$nextTick(this.getMaxHeight)
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.getMaxHeight)
+    })
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.getMaxHeight)
   }
 };
 </script>
@@ -155,7 +172,7 @@ export default {
 .banner-list-item p {
   color: #494949;
   white-space: break-spaces;
-  /*height: var(--item-height);*/
+  height: var(--item-height);
 }
 
 .banner-list-item__date{
