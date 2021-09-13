@@ -70,7 +70,17 @@ export default {
       const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       return `${months[date.getMonth()]} ${date.getDate()}`
     },
+    debounce(fn, interval) {
+      let timer;
+      return function debounced(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(function call() {
+          fn(...args);
+        }, interval);
+      };
+    },
     getMaxHeight (){
+      console.log('hey')
       const elems = this.$refs.bannerRef.children
       if (elems.length) {
         for (let el in elems) {
@@ -93,11 +103,11 @@ export default {
   mounted() {
     this.$nextTick(this.getMaxHeight)
     this.$nextTick(() => {
-      window.addEventListener('resize', this.getMaxHeight)
+      window.addEventListener('resize', this.debounce( this.getMaxHeight,400))
     })
   },
   unmounted() {
-    window.removeEventListener('resize', this.getMaxHeight)
+    window.removeEventListener('resize', this.debounce( this.getMaxHeight,400))
   }
 };
 </script>
