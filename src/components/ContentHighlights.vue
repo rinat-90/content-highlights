@@ -80,20 +80,17 @@ export default {
       };
     },
     getMaxHeight (){
-      console.log('hey')
       const elems = this.$refs.bannerRef.children
-      if (elems.length) {
-        for (let el in elems) {
-          if (elems[el].children){
-            if (elems[el].lastChild.clientHeight > this.height) {
-              this.height = elems[el].lastChild.clientHeight
-            }
-            if (elems[el].lastChild.clientHeight > elems[el].lastChild.firstChild.offsetHeight) {
-              this.height = elems[el].lastChild.firstChild.offsetHeight
-            }
-            if (elems[el].lastChild.clientHeight < elems[el].lastChild.firstChild.offsetHeight) {
-              this.height = elems[el].lastChild.firstChild.offsetHeight
-            }
+      for (let el in elems) {
+        if (elems[el].children){
+          if (elems[el].lastChild.clientHeight > this.height) {
+            this.height = elems[el].lastChild.clientHeight
+          }
+          if (elems[el].lastChild.clientHeight > elems[el].lastChild.firstChild.offsetHeight) {
+            this.height = elems[el].lastChild.firstChild.offsetHeight
+          }
+          if (elems[el].lastChild.clientHeight < elems[el].lastChild.firstChild.offsetHeight) {
+            this.height = elems[el].lastChild.firstChild.offsetHeight
           }
         }
       }
@@ -101,13 +98,13 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(this.getMaxHeight)
     this.$nextTick(() => {
-      window.addEventListener('resize', this.debounce( this.getMaxHeight,400))
+      this.getMaxHeight()
+      window.addEventListener('resize', this.debounce( this.getMaxHeight,300))
     })
   },
   unmounted() {
-    window.removeEventListener('resize', this.debounce( this.getMaxHeight,400))
+    window.removeEventListener('resize', this.getMaxHeight)
   }
 };
 </script>
